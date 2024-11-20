@@ -5,7 +5,7 @@
 
 module FanController(
     input clk,                // 100Hz 时钟信号
-    // input rst_n,              // 复位信号（低电平有效）
+    // input rst_n,           // 复位信号（低电平有效）
     input btn7,               // BTN7 按钮，用于切换挡位
     input sw0,                // SW0 拨码开关，用于控制充电状态
     output wire [6:0] segment,
@@ -16,7 +16,8 @@ module FanController(
 	 output [7:0] G_COL        // 红绿双色点阵,绿色发光二极管列信号 
 );
 
-    // 中间信号定义
+    // Intermediate Signals Declaration
+	 
     wire timer_1s, timer_500ms, timer_250ms, timer_200ms, timer_100ms;
     wire btn7_press;               // 去抖动后的按钮按下信号
     wire [1:0] fan_state;          // 风扇状态：00-空挡，01-低速，10-中速，11-高速
@@ -26,9 +27,11 @@ module FanController(
 	 wire [7:0] disp7;             // 数码管显示风扇挡位
     wire [7:0] disp1;             // 数码管显示电池电量（十位）
     wire [7:0] disp0;            // 数码管显示电池电量（个位）
-	 wire rst_n = 1'b1;
 	 wire [63:0] dot_matrix_R;
 	 wire [63:0] dot_matrix_G;
+	 wire rst_n = 1'b1;
+	 
+	 // Module Instantiation
 
     // Timer 模块实例化
     Timer timer_inst(

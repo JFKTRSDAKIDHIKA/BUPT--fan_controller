@@ -8,19 +8,23 @@ module DynamicDotMatrix (
     output reg [7:0] G_COL      // 绿色列信号
 );
 
-    // 实例化 ClockMultiplier 模块
-    wire clk_fast; // 提升后的时钟信号：100 kHz
-    ClockMultiplier clk_multiplier (
-        .clk_in(clk_in),
-        .rst_n(rst_n),
-        .clk_out(clk_fast)
-    );
-
+    // Signals Declaration
     // 行计数器，用于选择当前显示的行
     reg [2:0] row_counter; // 3-bit 行计数器 (0-7)
+	 //wire clk_fast;
     
-    // 在提升的时钟信号上，每个时钟周期更新当前行
-    always @(posedge clk_fast or negedge rst_n) begin
+	 /*
+	 // Module Instantiation
+	 ClockMultiplier2x u_multiplier2x(
+	     .clk_in(clk_in),
+		  .rst_n(rst_n),
+		  .clk_out(clk_fast)
+	 );
+	 */
+	 
+	  
+    // 每个时钟周期更新当前行
+    always @(posedge clk_in or negedge rst_n) begin
         if (!rst_n) begin
             row_counter <= 3'b000;
         end else begin
@@ -29,6 +33,7 @@ module DynamicDotMatrix (
         end
     end
 
+	 
     // 根据行计数器设置 ROW 信号（只有一行是低电平）
     always @(*) begin
         case (row_counter)
@@ -82,4 +87,5 @@ module DynamicDotMatrix (
         endcase
     end
 
+	 
 endmodule

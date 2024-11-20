@@ -16,7 +16,7 @@ module StateManager(
     input clk,
     input rst_n,
     input btn7_press,
-    input battery_empty,  // 新增的输入信号：电池空电标志
+    input battery_empty,  // 输入信号：电池空电标志
     output reg [1:0] state // 当前风扇状态：00-空挡，01-低速，10-中速，11-高速
 );
 

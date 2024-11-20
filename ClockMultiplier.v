@@ -1,4 +1,4 @@
-module ClockMultiplier(
+module ClockDivider(
     input wire clk_in,       // 输入时钟：100 Hz
     input wire rst_n,        // 复位信号
     output reg clk_out       // 输出时钟：100 kHz
