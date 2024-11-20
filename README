@@ -1,77 +1,90 @@
-FanController Project
-Overview
-The FanController project is a Verilog-based digital design that simulates a fan controller system with various functionalities, including fan speed control, battery monitoring, and status indication using a 7-segment display and a dual-color dot matrix. The project is developed with a strong emphasis on design methodology, utilizing modular and hierarchical design techniques to ensure clarity, scalability, and manageability of the overall system.
+# FanController Project
 
-Design Methodology
-This project follows a Bottom-up Design approach. The development begins by constructing the most fundamental building blocks, which are then systematically integrated into higher-level modules. This modular approach enables easier debugging, testing, and reuse of components, contributing to a well-organized and comprehensible design.
+## Overview
+The **FanController** project is a Verilog-based digital design that simulates a fan controller system with various functionalities, including:
 
-Key methodologies applied in this project include:
+- **Fan speed control**
+- **Battery monitoring**
+- **Status indication** using a 7-segment display and a dual-color dot matrix
 
-Design Abstraction: The project utilizes multiple levels of abstraction to manage complexity. High-level modules abstract away the detailed implementation of lower-level components, allowing a top-level overview of the system behavior without getting bogged down by specifics.
-Modular Design: Each feature of the system (e.g., timing, debounce, fan control, battery management, display management) is encapsulated within its own module. This separation of concerns enhances readability, reusability, and maintenance.
-Hierarchical Design Representation: The project is structured in a hierarchy where the top module, FanController, orchestrates the behavior of sub-modules like Timer, Debounce, StateManager, BatteryManager, DotMatrixDisplay, DynamicDotMatrix, and SevenSegmentDisplay.
-Hierarchy & Design Representation
-The project is organized hierarchically, with each level representing a specific functionality or group of functionalities. Below is a breakdown of the project’s hierarchy and design:
+The project emphasizes a clear and organized **design methodology**, utilizing modular and hierarchical design techniques for clarity, scalability, and manageability.
 
-1. Top-Level Module (FanController)
-Purpose: Manages overall system behavior by integrating various sub-modules.
-Components:
-Timer: Handles timing signals (1s, 500ms, etc.) for various operations.
-Debounce: Filters out noise from user inputs for stable signal detection.
-StateManager: Manages the fan's operational state (off, low speed, medium speed, high speed).
-BatteryManager: Monitors battery level and charging status.
-LEDControl: Controls the LED indicators based on fan state and battery status.
-DotMatrixDisplay: Handles the pattern generation for the dual-color dot matrix display.
-DynamicDotMatrix: Manages multiplexing for the dual-color dot matrix display.
-SevenSegmentDisplay: Manages 7-segment display for showing fan speed and battery level.
-DynamicDisplay3: Controls the dynamic scanning for the 7-segment display.
-2. Sub-Modules
+## Design Methodology
+This project follows a **Bottom-up Design** approach. The development begins by constructing fundamental building blocks, which are then systematically integrated into higher-level modules. Key methodologies include:
+
+- **Design Abstraction**: Managing complexity through multiple levels of abstraction.
+- **Modular Design**: Encapsulating each system feature (timing, debounce, fan control, etc.) in its own module.
+- **Hierarchical Design Representation**: Structuring the project so that the top module, `FanController`, integrates all sub-modules.
+
+## Project Hierarchy & Design Representation
+
+### 1. Top-Level Module: `FanController`
+**Purpose**: Manages overall system behavior by integrating various sub-modules.
+
+**Components**:
+- `Timer`: Handles timing signals (1s, 500ms, etc.)
+- `Debounce`: Filters noise from user inputs
+- `StateManager`: Manages fan's operational state (off, low, medium, high)
+- `BatteryManager`: Monitors battery level and charging status
+- `LEDControl`: Controls LED indicators for fan state and battery status
+- `DotMatrixDisplay`: Generates patterns for the dual-color dot matrix
+- `DynamicDotMatrix`: Manages multiplexing for the dual-color dot matrix
+- `SevenSegmentDisplay`: Displays fan speed and battery level
+- `DynamicDisplay3`: Controls dynamic scanning for the 7-segment display
+
+### 2. Sub-Modules
 Each sub-module is a self-contained unit responsible for a specific function in the system:
-Timer: Generates various timing intervals for synchronous operations.
-Debounce: Cleans up button inputs to ensure noise-free signal transitions.
-StateManager: Implements a finite state machine to manage fan speed states.
-BatteryManager: Tracks battery depletion and charging, adjusting indicators accordingly.
-LEDControl: Provides visual feedback on the fan's operational state and battery status.
-DotMatrixDisplay & DynamicDotMatrix: Work together to control and multiplex the dual-color dot matrix.
-SevenSegmentDisplay & DynamicDisplay3: Handle the multiplexing and digit display of the fan's state and battery level.
-Design Abstraction
-The system is abstracted at multiple levels, with each abstraction encapsulating the complexity of the underlying details:
 
-System Level: At the top-most level, the FanController module oversees the entire system, handling inputs and outputs without concerning itself with the low-level details of how each functionality is implemented.
-Functional Level: Each sub-module abstracts specific tasks such as timing, state management, or display control. This separation means that understanding a particular aspect of the system only requires focusing on the corresponding module.
-Hardware Abstraction: Inside each sub-module, hardware-specific details (such as timing signals or button debouncing) are encapsulated, allowing modifications without affecting the rest of the system.
-Modular Design
-The project’s emphasis on modularity means that each feature is implemented in an independent and encapsulated module. This approach has several benefits:
+- **`Timer`**: Generates timing intervals for synchronous operations.
+- **`Debounce`**: Cleans up button inputs to ensure noise-free transitions.
+- **`StateManager`**: A finite state machine for fan speed control.
+- **`BatteryManager`**: Monitors battery status.
+- **`LEDControl`**: Provides visual feedback on system state.
+- **`DotMatrixDisplay` & `DynamicDotMatrix`**: Control the dual-color dot matrix.
+- **`SevenSegmentDisplay` & `DynamicDisplay3`**: Manage multiplexing for the 7-segment display.
 
-Scalability: New features can be added without altering the existing codebase. For example, adding a new fan speed would only require changes in the StateManager module.
-Maintainability: Each module can be tested and debugged separately, simplifying the overall development process.
-Reusability: Modules are designed to be reusable. The Timer or Debounce module can be easily adapted for other projects without modification.
-Bottom-up Design
-The project strictly follows a bottom-up design philosophy, starting from basic building blocks:
+## Design Abstraction
+The system is abstracted at multiple levels:
 
-Building the Foundation:
+- **System Level**: The `FanController` module oversees the entire system, abstracting away low-level implementation details.
+- **Functional Level**: Each sub-module abstracts specific tasks like timing, state management, or display control.
+- **Hardware Abstraction**: Inside each sub-module, hardware-specific details are encapsulated.
 
-Timer Module: The first step was to create a robust timing module capable of generating various periodic signals needed for the fan’s operations.
-Debounce Module: Addressed the issue of noisy button inputs, ensuring reliable input detection.
-Battery Management: Implemented a module to handle charging and battery depletion.
-Intermediate Layers:
+## Modular Design
+The project’s emphasis on modularity provides several benefits:
 
-StateManager Module: Built a finite state machine to control the fan’s operational state, which interacts directly with the battery management and button modules.
-Display Modules: Created separate modules for handling visual outputs (7-segment display and dot matrix) with multiplexing to conserve I/O pins.
-Integration:
+- **Scalability**: New features can be added without altering existing code.
+- **Maintainability**: Each module can be tested and debugged separately.
+- **Reusability**: Modules are reusable for other projects.
 
-Integrated the foundational modules into the top-level FanController, enabling all the individual components to work together harmoniously.
-Tested the integrated system iteratively to ensure seamless interaction between the components.
-Managing Design Complexity
-Managing the complexity of a digital system like the FanController requires a thoughtful application of design abstraction and modular design principles. By isolating each function into dedicated modules, we reduce interdependencies, making the system easier to understand and modify.
+## Bottom-up Design Process
+### Building the Foundation
+- **`Timer Module`**: Created first to generate periodic signals.
+- **`Debounce Module`**: Implemented for reliable button input.
+- **`Battery Management`**: Handles charging and battery depletion.
 
-Furthermore, the use of hierarchical organization makes it possible to visualize the system at different levels of granularity, from high-level behaviors down to detailed signal manipulations. This is facilitated by effective use of Verilog constructs, such as always blocks for sequential logic and continuous assignments for combinational logic.
+### Intermediate Layers
+- **`StateManager Module`**: Manages fan state.
+- **Display Modules**: Handle visual outputs (7-segment display and dot matrix).
 
-Understanding of Tools
-This project relies heavily on simulation tools for verification and FPGA synthesis tools for hardware implementation. Here’s a breakdown of the tools used:
+### Integration
+- Integrated modules into `FanController`.
+- Tested the system iteratively for seamless component interaction.
 
-Simulation: Before deploying on hardware, the design was verified through simulation, ensuring that each module functioned correctly in isolation and when integrated.
-Synthesis: The design was synthesized using FPGA-specific tools, which helped identify any timing constraints and resource usage limitations.
-Debugging: Debugging tools were used extensively to verify signal integrity and correct functional behavior during synthesis.
-Conclusion
-The FanController project is a comprehensive example of how to manage a complex digital system using hierarchical and modular design techniques. By following a bottom-up approach and employing design abstractions, the project achieves both simplicity and scalability. This structured methodology not only facilitates effective development but also ensures that the system is adaptable for future enhancements.
+## Managing Design Complexity
+Design complexity is managed through **modular design** and **hierarchical organization**, allowing visualization at different levels of granularity. The use of Verilog constructs like `always` blocks and continuous assignments facilitates this process.
+
+## Tools & Verification
+The project relies on several tools for verification and implementation:
+
+- **Simulation**: Verify functionality before hardware deployment.
+- **Synthesis**: Check for timing constraints and resource usage.
+- **Debugging**: Use debugging tools to ensure signal integrity and correct behavior.
+
+## Conclusion
+The FanController project is a comprehensive example of managing a complex digital system using **hierarchical and modular design**. The structured methodology ensures both simplicity and scalability, making the system adaptable for future enhancements.
+
+---
+
+**Note**: For more detailed technical information, please refer to the individual module files.
+
