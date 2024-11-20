@@ -71,6 +71,9 @@ module FanController(
         .state(fan_state),
         .timer_100ms(timer_100ms),
         .timer_200ms(timer_200ms),
+		  .timer_250ms(timer_250ms),
+        .timer_500ms(timer_500ms),
+		  .timer_1s(timer_1s),
         .battery(battery_level),
         .battery_empty(battery_empty)
     );

@@ -18,6 +18,9 @@ module BatteryManager(
     input [1:0] state,      // 当前风扇状态
     input timer_100ms,      // 100ms定时信号
     input timer_200ms,      // 200ms定时信号
+	 input timer_250ms,      // 250ms定时信号       
+	 input timer_500ms,      // 500ms定时信号
+	 input timer_1s,         // 1s定时信号
     output reg [7:0] battery,  // 当前电量值（0-99）
     output reg battery_empty   // 电量耗尽标志
 );
@@ -29,13 +32,29 @@ module BatteryManager(
             if (battery < 8'd99) begin
                 if (state == 2'b00 && timer_100ms) // 只有在空挡状态且timer_100ms有效时充电
                     battery <= battery + 1;
-                else if (state != 2'b00 && timer_200ms) // 其他状态下，基于timer_200ms充电
+                else if (state == 2'b01 && timer_200ms) 
                     battery <= battery + 1;
+					 else if (state == 2'b10 && timer_250ms)
+					     battery <= battery + 1;
+					 else if (state == 2'b11 && timer_500ms)
+					     battery <= battery + 1;
+					 else 
+					     battery <= battery + 1;
             end
         end else if (state != 2'b00 && timer_200ms) begin
             // 放电逻辑
-            if (battery > 0)
-                battery <= battery - 1;
+            if (battery > 0) begin
+				    if (state == 2'b00 && timer_1s)
+                    battery <= battery - 1;
+					 else if (state == 2'b01 && timer_500ms)
+					     battery <= battery - 1;
+				    else if (state == 2'b10 && timer_250ms)
+					     battery <= battery - 1;
+					 else if (state == 2'b11 && timer_200ms)
+					     battery <= battery - 1;
+					 else 
+					     battery <= battery - 1;
+				end
         end
     end
 
