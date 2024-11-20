@@ -1,0 +1,61 @@
+# Quartus-generated folders and temporary files
+db/
+incremental_db/
+*.rpt
+*.qws
+*.qpf
+*.qsf
+*.srf
+*.log
+*.bak
+*.chg
+*.tmp
+*.tcl
+*.qxp
+*.done
+
+/output_files
+
+# Simulation output files
+simulation/modelsim/
+simulation/modelsim/*.wlf
+simulation/modelsim/*.vcd
+simulation/modelsim/*.log
+simulation/modelsim/*.out
+simulation/modelsim/work/
+simulation/modelsim/transcript
+
+# Backup files
+*~
+*.bak
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Compiled object files
+*.obj
+*.o
+*.ko
+*.elf
+
+# Executable files
+*.exe
+*.out
+*.app
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.cache
+
+# IDE files
+.idea/
+.vscode/
