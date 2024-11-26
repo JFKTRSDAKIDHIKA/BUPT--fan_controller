@@ -1,3 +1,6 @@
+// WARNING: This module `fan_controller` is no longer in use and has been deprecated.
+// Please avoid using or modifying this module in future development.
+
 module fan_controller(
     input clk,             // 系统时钟
     input rst_n,           // 复位信号，低电平有效
