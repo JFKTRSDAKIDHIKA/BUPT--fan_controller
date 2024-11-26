@@ -32,28 +32,26 @@ module BatteryManager(
             if (battery < 8'd99) begin
                 if (state == 2'b00 && timer_100ms) // 只有在空挡状态且timer_100ms有效时充电
                     battery <= battery + 1;
-                else if (state == 2'b01 && timer_200ms) 
+                else if (state == 2'b01 && timer_250ms) 
                     battery <= battery + 1;
-					 else if (state == 2'b10 && timer_250ms)
+					 else if (state == 2'b10 && timer_500ms)
 					     battery <= battery + 1;
-					 else if (state == 2'b11 && timer_500ms)
+					 else if (state == 2'b11 && timer_1s)
 					     battery <= battery + 1;
 					 else 
-					     battery <= battery + 1;
+					     battery <= battery + 0;
             end
         end else if (state != 2'b00 && timer_200ms) begin
             // 放电逻辑
             if (battery > 0) begin
-				    if (state == 2'b00 && timer_1s)
-                    battery <= battery - 1;
-					 else if (state == 2'b01 && timer_500ms)
+				    if (state == 2'b01 && timer_500ms)
 					     battery <= battery - 1;
 				    else if (state == 2'b10 && timer_250ms)
 					     battery <= battery - 1;
-					 else if (state == 2'b11 && timer_200ms)
+					 else if (state == 2'b11 && timer_100ms)
 					     battery <= battery - 1;
 					 else 
-					     battery <= battery - 1;
+					     battery <= battery - 0;
 				end
         end
     end

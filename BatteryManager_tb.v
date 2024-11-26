@@ -6,12 +6,30 @@ module BatteryManager_tb;
     reg rst_n;
     reg sw0;
     reg [1:0] state;
-    reg timer_100ms;
-    reg timer_200ms;
+    wire timer_1s;
+    wire timer_500ms;
+    wire timer_250ms;
+    wire timer_200ms;
+    wire timer_100ms;
     wire [7:0] battery;
     wire battery_empty;
 
-    // 实例化被测模块
+    // 时钟信号生成，假设 10ns 的时钟周期 (即 100MHz)
+    initial clk = 0;
+    always #5 clk = ~clk;
+
+    // 实例化 Timer 模块
+    Timer timer_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .timer_1s(timer_1s),
+        .timer_500ms(timer_500ms),
+        .timer_250ms(timer_250ms),
+        .timer_200ms(timer_200ms),
+        .timer_100ms(timer_100ms)
+    );
+
+    // 实例化被测模块 BatteryManager
     BatteryManager uut (
         .clk(clk),
         .rst_n(rst_n),
@@ -19,32 +37,12 @@ module BatteryManager_tb;
         .state(state),
         .timer_100ms(timer_100ms),
         .timer_200ms(timer_200ms),
+        .timer_250ms(timer_250ms),
+        .timer_500ms(timer_500ms),
+        .timer_1s(timer_1s),
         .battery(battery),
         .battery_empty(battery_empty)
     );
-
-    // 时钟信号生成，假设 10ns 的时钟周期 (即 100MHz)
-    initial clk = 0;
-    always #5 clk = ~clk;
-
-    // 定时信号生成，用于模拟 100ms 和 200ms 脉冲信号
-    initial begin
-        timer_100ms = 0;
-        timer_200ms = 0;
-        forever begin
-            // 生成 100ms 脉冲信号
-            #999980;  // 等待接近 100ms 的时间 (100ms - 20ns)
-            timer_100ms = 1;
-            #10;      // 保持脉冲高电平持续 10ns
-            timer_100ms = 0;
-
-            // 生成 200ms 脉冲信号
-            #999980;  // 再次等待接近 100ms 的时间
-            timer_200ms = 1;
-            #10;      // 保持脉冲高电平持续 10ns
-            timer_200ms = 0;
-        end
-    end
 
     // 测试过程
     initial begin
@@ -99,10 +97,9 @@ module BatteryManager_tb;
             #2000000;  // 200ms
         end
         $display("Battery Depleted Again, battery_empty: %b", battery_empty);
-		  
-		  #1000000
 
         // 结束仿真
         $finish;
     end
 endmodule
+

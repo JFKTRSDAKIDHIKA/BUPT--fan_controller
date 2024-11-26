@@ -17,11 +17,11 @@
 // =============================================================================
 
 module LEDControl(
-    input clk,              // 系统时钟（100 Hz）
+    input clk,              // 系统时钟（1000 Hz）
     input rst_n,            // 复位信号
     input [7:0] battery,    // 当前电量值（0-255）
     input charging,         // 是否在充电
-    input fan_state,        // 风扇状态（0表示风扇空挡）
+    input [1:0] fan_state,        // 风扇状态（0表示风扇空挡）
     output reg led          // LED输出信号
 );
 
@@ -101,7 +101,7 @@ module LEDControl(
 		always @(posedge clk or negedge rst_n) begin
 			 if (!rst_n) begin
 				  led <= 1'b0; // 复位时 LED 熄灭
-			 end else if (fan_state == 1'b0) begin
+			 end else if (fan_state == 2'b00) begin
 				  led <= 1'b0; // 风扇空挡时 LED 熄灭
 			 end else if (charging) begin
 				  if (battery < 99) begin
